@@ -99,7 +99,7 @@ Check:
 aws sts get-caller-identity
 ```
 
-If the command fails, fix your AWS credentials before continuing.
+If the command fails, first make sure your AWS Learner Lab session is running and that the AWS CLI is using the current temporary credentials for that session.
 
 ---
 
