@@ -1,0 +1,27 @@
+# AWS credentials
+.aws/
+credentials
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local downloaded/raw data
+data/raw/
+*.zip
+
+# Secrets / keys
+*.pem
+*.key
