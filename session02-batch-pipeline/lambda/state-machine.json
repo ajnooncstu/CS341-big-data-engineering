@@ -1,0 +1,56 @@
+{
+  "Comment": "CS341 Session 02 teaching workflow",
+  "StartAt": "CheckBatch",
+  "States": {
+    "CheckBatch": {
+      "Type": "Task",
+      "Resource": "<CHECK_BATCH_LAMBDA_ARN>",
+      "Next": "AlreadyProcessed?"
+    },
+    "AlreadyProcessed?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.status",
+          "StringEquals": "ALREADY_PROCESSED",
+          "Next": "AlreadyProcessed"
+        }
+      ],
+      "Default": "ValidateBatch"
+    },
+    "AlreadyProcessed": {
+      "Type": "Succeed"
+    },
+    "ValidateBatch": {
+      "Type": "Task",
+      "Resource": "<VALIDATE_BATCH_LAMBDA_ARN>",
+      "Next": "Valid?"
+    },
+    "Valid?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.validation_status",
+          "StringEquals": "PASS",
+          "Next": "TransformBatch"
+        }
+      ],
+      "Default": "QuarantineBatch"
+    },
+    "TransformBatch": {
+      "Type": "Task",
+      "Resource": "<TRANSFORM_BATCH_LAMBDA_ARN>",
+      "Next": "VerifyBatch"
+    },
+    "VerifyBatch": {
+      "Type": "Task",
+      "Resource": "<VERIFY_BATCH_LAMBDA_ARN>",
+      "End": true
+    },
+    "QuarantineBatch": {
+      "Type": "Task",
+      "Resource": "<QUARANTINE_BATCH_LAMBDA_ARN>",
+      "End": true
+    }
+  }
+}
